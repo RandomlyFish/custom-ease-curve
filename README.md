@@ -4,9 +4,7 @@ A class for creating fully configurable easing behavior.
 
 ## Getting started
 
-There's CustomEaseCurve.js for javascript and CustomEaseCurve.ts for typescript.
-
-... Will add the rest of the instructions later
+... Will come later
 
 <br>
 
