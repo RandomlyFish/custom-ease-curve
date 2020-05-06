@@ -1,2 +1,99 @@
 # custom-ease-curve
-A class for creating custom easing behavior
+
+A class for creating fully configurable easing behavior.
+
+## Getting started
+
+There's CustomEaseCurve.js for javascript and CustomEaseCurve.ts for typescript.
+
+... Will add the rest of the instructions later
+
+<br>
+
+## Examples
+
+#### Ease in
+
+A curve which starts slowly and increases velocity at the end
+``` typescript
+const curve : CustomEaseCurve = new CustomEaseCurve([
+  {time: 0, value: 0, velocity: 0}, // Start slowly
+  {time: 1, value: 1, velocity: 1} // End with max velocity
+]);
+
+const valueAtTime : number = curve.getValueAtTime(0.5); // will return 0.25
+```
+
+#### Ease out
+
+A curve which starts at the highest velocity and slows down at the end
+``` typescript
+const curve : CustomEaseCurve = new CustomEaseCurve([
+  {time: 0, value: 0, velocity: 1}, // Start at max velocity
+  {time: 1, value: 1, velocity: 0} // End slowly
+]);
+
+const valueAtTime : number = curve.getValueAtTime(0.5); // will return 0.75
+```
+
+#### Ease in and out
+
+A curve which starts and ends slowly with the highest velocity at the half-way point
+``` typescript
+const curve : CustomEaseCurve = new CustomEaseCurve([
+  {time: 0, value: 0, velocity: 0}, // Start slowly
+  {time: 0.5, value: 0.5, velocity: 1}, // Reach max velocity at the half-way point
+  {time: 1, value: 1, velocity: 0} // Slow down in the end
+]);
+
+const valueAtTime : number = curve.getValueAtTime(0.5); // will return 0.5
+```
+
+#### Inverted ease in and out
+
+The opposite of ease in and out, where it instead starts and stops at the highest velocity
+``` typescript
+const curve : CustomEaseCurve = new CustomEaseCurve([
+  {time: 0, value: 0, velocity: 1}, // Start at max velocity
+  {time: 0.5, value: 0.5, velocity: 0}, // Slow down at the half-way point
+  {time: 1, value: 1, velocity: 1} // End at max velocity
+]);
+
+const valueAtTime : number = curve.getValueAtTime(0.5); // will return 0.5
+```
+
+#### Repeating ease in and out
+
+A curve with two ease in and out, where it both starts and ends at value 0
+``` typescript
+const curve : CustomEaseCurve = new CustomEaseCurve([
+  {time: 0, value: 0, velocity: 0},
+  {time: 0.25, value: 0.5, velocity: 1},
+  {time: 0.5, value: 1, velocity: 0},
+  {time: 0.75, value: 0.5, velocity: 1},
+  {time: 1, value: 0, velocity: 0},
+]);
+
+const valueAtTime : number = curve.getValueAtTime(0.5); // will return 1
+```
+
+#### Bounce
+
+A curve suitable for a bouncing ball, where it bounces up 3 times, each with less height
+``` typescript
+const curve : CustomEaseCurve = new CustomEaseCurve([
+  {time: 0, value: 0, velocity: 1}, // Bounce up
+  {time: 2, value: 1, velocity: 0}, // Reach the peak value of 1
+  {time: 4, value: 0, velocity: 1}, // Fall down
+  
+  // We change direction by adding a time that is the same as the last
+  {time: 4, value: 0, velocity: 1}, // Bounce up
+  {time: 5, value: 0.4, velocity: 0}, // Reach the peak value of 0.4
+  {time: 6, value: 0, velocity: 1}, // Fall down
+  
+  // Same here
+  {time: 6, value: 0, velocity: 1}, // Bounce up
+  {time: 6.5, value: 0.15, velocity: 0}, // Reach the peak value of 0.15
+  {time: 7, value: 0, velocity: 1}, // Fall down
+]);
+```
